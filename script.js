@@ -165,6 +165,15 @@ document.addEventListener('DOMContentLoaded', () => {
             voiceGenerationLoading.classList.add('hidden');
             voicePreview.classList.remove('hidden');
             
+            // Add event listeners for audio play/end to trigger bounce animation
+            characterVoice.onplay = function() {
+                characterImage.classList.add('bounce');
+            };
+            
+            characterVoice.onended = function() {
+                characterImage.classList.remove('bounce');
+            };
+            
         } catch (error) {
             console.error('Error generating voice:', error);
             alert('Failed to generate character voice. Please try again.');
@@ -209,4 +218,3 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
-

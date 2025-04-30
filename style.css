@@ -157,5 +157,10 @@ button:hover {
 
 .bounce {
     animation: bounce 1s ease;
+    animation-iteration-count: infinite;
+    animation-play-state: running;
 }
 
+audio:paused ~ .bounce {
+    animation-play-state: paused;
+}
