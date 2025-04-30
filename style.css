@@ -85,21 +85,6 @@ button:hover {
     margin: 1rem 0;
 }
 
-#characterImage, #finalCharacter {
-    max-width: 300px;
-    max-height: 300px;
-    object-fit: contain;
-}
-
-.hidden {
-    display: none;
-}
-
-#imagePreview, #voicePreview {
-    text-align: center;
-    margin-top: 1.5rem;
-}
-
 #characterContainer {
     display: flex;
     justify-content: center;
@@ -201,4 +186,17 @@ audio:paused ~ .bounce {
     font-weight: bold;
     width: 30px;
     text-align: center;
+}
+
+#imagePreview, #voicePreview {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+#characterImage, #finalCharacter {
+    max-width: 300px;
+    max-height: 300px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 1rem auto;
 }

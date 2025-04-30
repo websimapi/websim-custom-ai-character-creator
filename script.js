@@ -168,37 +168,8 @@ document.addEventListener('DOMContentLoaded', () => {
             characterData.voiceSettings.type = voiceType.value;
             characterData.voiceSettings.tone = voiceTone.value;
             
-            // Adjust text based on personality/tone
+            // Use the voice sample directly without tone modifiers
             let processedText = voiceSample.value.trim();
-            
-            // Modify text based on selected tone
-            switch(characterData.voiceSettings.tone) {
-                case 'friendly':
-                    processedText = `(In a warm, friendly tone) ${processedText}`;
-                    break;
-                case 'cheerful':
-                    processedText = `(Excitedly and cheerfully) ${processedText}`;
-                    break;
-                case 'mysterious':
-                    processedText = `(In a low, mysterious voice) ${processedText}`;
-                    break;
-                case 'serious':
-                    processedText = `(In a formal, serious tone) ${processedText}`;
-                    break;
-                case 'energetic':
-                    processedText = `(Energetically) ${processedText}`;
-                    break;
-                case 'calm':
-                    processedText = `(In a calm, soothing voice) ${processedText}`;
-                    break;
-            }
-            
-            // Adjust text for speed
-            if (characterData.voiceSettings.speed < 0.9) {
-                processedText = `(Speaking slowly) ${processedText}`;
-            } else if (characterData.voiceSettings.speed > 1.1) {
-                processedText = `(Speaking quickly) ${processedText}`;
-            }
             
             const result = await websim.textToSpeech({
                 text: processedText,
@@ -207,8 +178,10 @@ document.addEventListener('DOMContentLoaded', () => {
             
             characterData.voiceUrl = result.url;
             
-            // Show voice preview
+            // Show voice preview and image
             characterVoice.src = characterData.voiceUrl;
+            characterImage.src = characterData.processedImageUrl;
+            imagePreview.classList.remove('hidden');
             voiceGenerationLoading.classList.add('hidden');
             voicePreview.classList.remove('hidden');
             
@@ -236,37 +209,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         try {
-            // Process text based on saved voice settings
+            // Use the user message directly without tone modifiers
             let processedText = userMessage.value.trim();
-            
-            // Apply the same tone/personality modifiers
-            switch(characterData.voiceSettings.tone) {
-                case 'friendly':
-                    processedText = `(In a warm, friendly tone) ${processedText}`;
-                    break;
-                case 'cheerful':
-                    processedText = `(Excitedly and cheerfully) ${processedText}`;
-                    break;
-                case 'mysterious':
-                    processedText = `(In a low, mysterious voice) ${processedText}`;
-                    break;
-                case 'serious':
-                    processedText = `(In a formal, serious tone) ${processedText}`;
-                    break;
-                case 'energetic':
-                    processedText = `(Energetically) ${processedText}`;
-                    break;
-                case 'calm':
-                    processedText = `(In a calm, soothing voice) ${processedText}`;
-                    break;
-            }
-            
-            // Adjust for speed
-            if (characterData.voiceSettings.speed < 0.9) {
-                processedText = `(Speaking slowly) ${processedText}`;
-            } else if (characterData.voiceSettings.speed > 1.1) {
-                processedText = `(Speaking quickly) ${processedText}`;
-            }
             
             // Generate speech for the message using saved settings
             const result = await websim.textToSpeech({
