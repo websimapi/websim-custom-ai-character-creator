@@ -24,11 +24,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const userMessage = document.getElementById('userMessage');
     const speakBtn = document.getElementById('speakBtn');
     
+    const voiceType = document.getElementById('voiceType');
+    const voiceTone = document.getElementById('voiceTone');
+    const voiceSpeed = document.getElementById('voiceSpeed');
+    const speedValue = document.getElementById('speedValue');
+    
     // Store character data
     let characterData = {
         imageUrl: null,
         processedImageUrl: null,
-        voiceUrl: null
+        voiceUrl: null,
+        voiceSettings: {
+            type: 'en-female',
+            tone: 'friendly',
+            speed: 1.0
+        }
     };
     
     // Event listeners
@@ -48,6 +58,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     speakBtn.addEventListener('click', makeCharacterSpeak);
+    
+    voiceSpeed.addEventListener('input', () => {
+        speedValue.textContent = voiceSpeed.value;
+        characterData.voiceSettings.speed = parseFloat(voiceSpeed.value);
+    });
     
     // Generate character image
     async function generateCharacterImage() {
@@ -149,13 +164,45 @@ document.addEventListener('DOMContentLoaded', () => {
         voicePreview.classList.add('hidden');
         
         try {
-            // Choose random voice type for variation
-            const voices = ['en-male', 'en-female'];
-            const randomVoice = voices[Math.floor(Math.random() * voices.length)];
+            // Save voice settings
+            characterData.voiceSettings.type = voiceType.value;
+            characterData.voiceSettings.tone = voiceTone.value;
+            
+            // Adjust text based on personality/tone
+            let processedText = voiceSample.value.trim();
+            
+            // Modify text based on selected tone
+            switch(characterData.voiceSettings.tone) {
+                case 'friendly':
+                    processedText = `(In a warm, friendly tone) ${processedText}`;
+                    break;
+                case 'cheerful':
+                    processedText = `(Excitedly and cheerfully) ${processedText}`;
+                    break;
+                case 'mysterious':
+                    processedText = `(In a low, mysterious voice) ${processedText}`;
+                    break;
+                case 'serious':
+                    processedText = `(In a formal, serious tone) ${processedText}`;
+                    break;
+                case 'energetic':
+                    processedText = `(Energetically) ${processedText}`;
+                    break;
+                case 'calm':
+                    processedText = `(In a calm, soothing voice) ${processedText}`;
+                    break;
+            }
+            
+            // Adjust text for speed
+            if (characterData.voiceSettings.speed < 0.9) {
+                processedText = `(Speaking slowly) ${processedText}`;
+            } else if (characterData.voiceSettings.speed > 1.1) {
+                processedText = `(Speaking quickly) ${processedText}`;
+            }
             
             const result = await websim.textToSpeech({
-                text: voiceSample.value.trim(),
-                voice: randomVoice,
+                text: processedText,
+                voice: characterData.voiceSettings.type,
             });
             
             characterData.voiceUrl = result.url;
@@ -189,10 +236,42 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         try {
-            // Generate speech for the message
+            // Process text based on saved voice settings
+            let processedText = userMessage.value.trim();
+            
+            // Apply the same tone/personality modifiers
+            switch(characterData.voiceSettings.tone) {
+                case 'friendly':
+                    processedText = `(In a warm, friendly tone) ${processedText}`;
+                    break;
+                case 'cheerful':
+                    processedText = `(Excitedly and cheerfully) ${processedText}`;
+                    break;
+                case 'mysterious':
+                    processedText = `(In a low, mysterious voice) ${processedText}`;
+                    break;
+                case 'serious':
+                    processedText = `(In a formal, serious tone) ${processedText}`;
+                    break;
+                case 'energetic':
+                    processedText = `(Energetically) ${processedText}`;
+                    break;
+                case 'calm':
+                    processedText = `(In a calm, soothing voice) ${processedText}`;
+                    break;
+            }
+            
+            // Adjust for speed
+            if (characterData.voiceSettings.speed < 0.9) {
+                processedText = `(Speaking slowly) ${processedText}`;
+            } else if (characterData.voiceSettings.speed > 1.1) {
+                processedText = `(Speaking quickly) ${processedText}`;
+            }
+            
+            // Generate speech for the message using saved settings
             const result = await websim.textToSpeech({
-                text: userMessage.value.trim(),
-                voice: 'en-female', // Use the same voice type as before
+                text: processedText,
+                voice: characterData.voiceSettings.type,
             });
             
             // Create audio element
