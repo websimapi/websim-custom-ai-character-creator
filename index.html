@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom AI Character Creator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Custom AI Character Creator</h1>
+        
+        <div class="creation-steps">
+            <div class="step" id="step1">
+                <h2>Step 1: Create Your Character Image</h2>
+                <p>Describe your character (it will be created with a white background)</p>
+                <textarea id="characterDescription" placeholder="A cute cartoon robot with big eyes and antennas..."></textarea>
+                <button id="generateImageBtn">Generate Character</button>
+                <div id="imageGenerationLoading" class="loading-spinner hidden">
+                    <div class="spinner"></div>
+                    <p>Creating your character...</p>
+                </div>
+                <div id="imagePreview" class="hidden">
+                    <h3>Your Character:</h3>
+                    <div class="preview-container">
+                        <img id="characterImage" alt="Your character">
+                    </div>
+                    <button id="regenerateBtn">Regenerate</button>
+                    <button id="confirmImageBtn">Confirm & Continue</button>
+                </div>
+            </div>
+
+            <div class="step hidden" id="step2">
+                <h2>Step 2: Create Your Character Voice</h2>
+                <p>Write a sample line for your character to create their voice</p>
+                <textarea id="voiceSample" placeholder="Hello! I'm your new friend. Nice to meet you!"></textarea>
+                <button id="generateVoiceBtn">Generate Voice</button>
+                <div id="voiceGenerationLoading" class="loading-spinner hidden">
+                    <div class="spinner"></div>
+                    <p>Creating your character's voice...</p>
+                </div>
+                <div id="voicePreview" class="hidden">
+                    <h3>Listen to your character:</h3>
+                    <audio id="characterVoice" controls></audio>
+                    <button id="regenerateVoiceBtn">Regenerate</button>
+                    <button id="confirmVoiceBtn">Confirm & Continue</button>
+                </div>
+            </div>
+
+            <div class="step hidden" id="step3">
+                <h2>Talk with Your Character</h2>
+                <div class="character-display">
+                    <div id="characterContainer">
+                        <img id="finalCharacter" alt="Your character">
+                    </div>
+                </div>
+                <div class="interaction-area">
+                    <input type="text" id="userMessage" placeholder="Type something for your character to say...">
+                    <button id="speakBtn">Speak</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"4c6229722a6346bc8eb5cb0e5eae5d41","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
+
